@@ -12,14 +12,12 @@ $ composer require advans/php-api-catalogos-cfdi
 ## Ejemplo
 
 ````
-$lrfc = new \Advans\Api\Lco\Lco([
+$lrfc = new \Advans\Api\CatalogosCFDI\Config([
     'base_url' => 'https://ws40.advans.mx/api-lrfc/',
-    'key' => '**********************',
-    'use_exceptions' => false,
+    'key' => '**********************'
 ]);
 
-$serial = '00001000000514412260';
-$response = $lrfc->getBySerial($serial);
+$item = new \Advans\Api\CatalogosCFDI\CatalogosCFDI($config);
 ````
 
 ## Configuración
@@ -28,4 +26,4 @@ $response = $lrfc->getBySerial($serial);
 | :--- | :--- | :--- |
 | base_url | null | URL de la API |
 | key | null | API Key |
-| use_exceptions | true | Define si una respuesta con error dispara un Exception
+
