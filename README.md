@@ -17,7 +17,10 @@ $lrfc = new \Advans\Api\CatalogosCFDI\Config([
     'key' => '**********************'
 ]);
 
-$item = new \Advans\Api\CatalogosCFDI\CatalogosCFDI($config);
+$servicio = new \Advans\Api\CatalogosCFDI\CatalogosCFDI($config);
+
+$item = $servicio->getItem('c_CodigoPostal', '97000', '2022-01-01');
+
 ````
 
 ## Configuración
