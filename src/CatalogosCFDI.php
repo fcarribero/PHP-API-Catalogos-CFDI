@@ -32,8 +32,14 @@ class CatalogosCFDI {
      * @throws CatalogosCFDIException
      */
     public function getItem($catalogo, $value, $fecha = null) {
+
         try {
-            return json_decode($this->call($catalogo . '/' . $value . ($fecha !== null ? '?fecha=' . $fecha : '')));
+            if (gettype($value) == 'object' && get_class($value) == CustomWhere::class) {
+                var_dump($catalogo . '?where=' . urlencode($value->getWhere()) . ($fecha !== null ? '&fecha=' . urlencode($fecha) : ''));
+                return json_decode($this->call($catalogo . '?where=' . urlencode($value->getWhere()) . ($fecha !== null ? '&fecha=' . urlencode($fecha) : '')));
+            } else {
+                return json_decode($this->call($catalogo . '/' . $value . ($fecha !== null ? '?fecha=' . urlencode($fecha) : '')));
+            }
         } catch (CatalogosCFDIException $e) {
             if ($e->getCode() == 404) {
                 return false;
