@@ -38,9 +38,9 @@ class CatalogosCFDI {
             if ($fecha !== null) $query['fecha'] = $fecha;
             if (gettype($value) == 'object' && get_class($value) == CustomWhere::class) {
                 $query['where'] = $value->parse();
-                return json_decode($this->call($catalogo . '?' . http_build_query($query)));
+                return json_decode($this->call($catalogo, 'GET', $query));
             } else {
-                return json_decode($this->call($catalogo . '/' . $value . '?' . http_build_query($query)));
+                return json_decode($this->call($catalogo . '/' . $value, 'GET', $query));
             }
         } catch (CatalogosCFDIException $e) {
             if ($e->getCode() == 404) {
