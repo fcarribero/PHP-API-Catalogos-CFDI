@@ -12,8 +12,8 @@ $ composer require advans/php-api-catalogos-cfdi
 ## Ejemplo
 
 ````
-$lrfc = new \Advans\Api\CatalogosCFDI\Config([
-    'base_url' => 'https://ws40.advans.mx/api-lrfc/',
+$config = new \Advans\Api\CatalogosCFDI\Config([
+    'base_url' => '**************************',
     'key' => '**********************'
 ]);
 
