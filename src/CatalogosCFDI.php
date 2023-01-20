@@ -59,10 +59,10 @@ class CatalogosCFDI {
      */
     protected function call($method, string $verb = 'GET', $params = null) {
         $verb = strtoupper($verb);
-        $url = $this->config->base_url . $method;
+        $url = $this->config->base_url . $method . ($verb == 'GET' && $params ? '?' . http_build_query($params) : '');
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => $url . ($verb == 'GET' && $params ? '?' . http_build_query($params) : ''),
+            CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => $verb,
@@ -76,7 +76,7 @@ class CatalogosCFDI {
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         if ($http_code != 200 || $result === false) {
-            throw new CatalogosCFDIException('Error de conexión con Catálogos CFDI . HTTP_CODE: ' . $http_code, $http_code);
+            throw new CatalogosCFDIException('Error de conexión con Catálogos CFDI. HTTP_CODE: ' . $http_code, $http_code);
         }
         return $result;
     }
