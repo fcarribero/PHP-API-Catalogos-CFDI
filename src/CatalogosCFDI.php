@@ -3,8 +3,6 @@
 
 namespace Advans\Api\CatalogosCFDI;
 
-use Exception;
-
 class CatalogosCFDI {
 
     protected Config $config;
@@ -38,6 +36,10 @@ class CatalogosCFDI {
             if ($fecha !== null) $query['fecha'] = $fecha;
             if (gettype($value) == 'object' && get_class($value) == CustomWhere::class) {
                 $query['where'] = $value->parse();
+                return json_decode($this->call($catalogo, 'GET', $query));
+            } else if (gettype($value) == 'array') {
+                $where = new CustomWhere($value[0], $value[1]);
+                $query['where'] = $where->parse();
                 return json_decode($this->call($catalogo, 'GET', $query));
             } else {
                 return json_decode($this->call($catalogo . '/' . $value, 'GET', $query));
