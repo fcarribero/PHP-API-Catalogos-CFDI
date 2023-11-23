@@ -53,6 +53,35 @@ class CatalogosCFDI {
     }
 
     /**
+     * @param $catalogo
+     * @param $where
+     * @param null $fecha (Formato YYYY-MM-DD)
+     * @return bool|string
+     * @throws CatalogosCFDIException
+     */
+    public function getItemList($catalogo, $where, $fecha = null) {
+
+        try {
+            $query = [];
+            if ($fecha !== null) $query['fecha'] = $fecha;
+            if (gettype($where) == 'array') {
+                $value = new CustomWhere($where[0], $where[1]);
+            }
+            if (gettype($value) != 'object' || get_class($value) != CustomWhere::class) {
+                throw new CatalogosCFDIException('El parámetro $where debe ser una instancia de CustomWhere', 400);
+            }
+            $query['where'] = $value->parse();
+            $query['type'] = 'list';
+            return json_decode($this->call($catalogo, 'GET', $query));
+        } catch (CatalogosCFDIException $e) {
+            if ($e->getCode() == 404) {
+                return false;
+            }
+            throw $e;
+        }
+    }
+
+    /**
      * @param $method
      * @param string $verb
      * @param null $params
