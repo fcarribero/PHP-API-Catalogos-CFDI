@@ -5,8 +5,8 @@ use Advans\Api\CatalogosCFDI\CustomWhere;
 require __DIR__ . '/../vendor/autoload.php';
 
 $config = new \Advans\Api\CatalogosCFDI\Config([
-    'base_url' => 'http://local.advans.mx/api-catalogos-cfdi/',
-    'key' => '00000000000000000000000000000000'
+    'base_url' => $argv[1],
+    'key' => $argv[2]
 ]);
 
 $catalogos = new \Advans\Api\CatalogosCFDI\CatalogosCFDI($config);
